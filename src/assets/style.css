@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+* {
+  font-family: "Gilroy-Regular", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+@font-face {
+  font-family: "Gilroy-Regular";
+  src: url(./fonts/Gilroy-Regular.ttf) format("ttf");
+}
+.btn {
+  @apply mx-auto;
+  @apply bg-black;
+  @apply text-white;
+  @apply py-2;
+  @apply px-10;
+  @apply rounded-xl;
+  @apply font-semibold;
+  @apply text-lg;
+  @apply w-auto;
+}
