@@ -1,16 +1,16 @@
 const BASE_URL = "http://127.0.0.1:8000/api/";
-let myHeaders = new Headers();
+let headersApi = new Headers();
 let token = localStorage.siperas_key
 if (token) {
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    headersApi.append("Authorization", `Bearer ${token}`);
 }
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("charset", "utf-8");
+headersApi.append("Content-Type", "application/json");
+headersApi.append("charset", "utf-8");
 export default {
     async postData(url = "", data = {}) {
         let response = await fetch(BASE_URL + url, {
             method: "POST",
-            headers: myHeaders,
+            headers: headersApi,
             body: JSON.stringify(data),
         }).then(async (res) => {
             if (!res.ok) {
@@ -19,6 +19,20 @@ export default {
             } else {
                 let data = await res.json();
                 return Promise.resolve(data);
+            }
+        })
+        return response;
+    },
+    async getData(url = "") {
+        let response = await fetch(BASE_URL + url, {
+            method: "GET",
+            headers: headersApi
+        }).then(async res => {
+            let data = await res.json();
+            if (res.ok) {
+                return Promise.resolve(data);
+            } else {
+                return Promise.reject(data);
             }
         })
         return response;

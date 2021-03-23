@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
 * {
   font-family: "Gilroy-Regular", ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
@@ -21,4 +28,22 @@
   @apply font-semibold;
   @apply text-lg;
   @apply w-auto;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+  margin-top: -60px;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fading-enter-active,
+.fading-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fading-enter-from,
+.fading-leave-to {
+  opacity: 0;
 }

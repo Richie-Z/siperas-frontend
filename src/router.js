@@ -22,7 +22,8 @@ const routes = [{
             meta: {
                 authOnly: true,
                 title: "Dashboard - Sistem Informasi Pembayaran SPP ",
-            }
+            },
+            component: () => import('@/views/menu/Dashboard.vue'),
         }]
     },
 ]
@@ -38,7 +39,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.authOnly)) {
         if (!isLoggedIn()) {
             next({
-                path: "/login",
+                path: "/",
                 query: {
                     redirect: to.fullPath
                 },

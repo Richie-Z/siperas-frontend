@@ -2,7 +2,7 @@
   <div class="overflow-hidden max-h-full font-sans">
     <nav class="m-5 md:mx-20 md:my-10 w-full">
       <router-link
-        class="text-left font-bold text-sm md:text-4xl mx-auto"
+        class="text-left font-bold text-lg md:text-4xl mx-auto"
         :to="{ name: 'landing' }"
         >Siperas</router-link
       >
@@ -15,7 +15,7 @@
       </div>
       <!--Left Col-->
       <div class="flex w-full md:w-2/5 justify-center items-end">
-        <div class="container mx-auto flex flex-col items-center -mt-2">
+        <div class="container mx-auto flex flex-col items-center mt-2 md:-mt-2">
           <form
             method="POST"
             @submit.prevent="login"
@@ -110,6 +110,8 @@ export default {
             title: "Sukses Login",
             icon: "success",
           });
+          this.$router.push({ name: "dashboard" });
+          this.$store.dispatch("user", data.user);
         })
         .catch((error) => {
           Swal.fire({
@@ -129,14 +131,3 @@ export default {
   },
 };
 </script>
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-  margin-top: -60px;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
