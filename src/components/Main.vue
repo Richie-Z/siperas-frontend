@@ -1,6 +1,6 @@
 <template>
   <!-- component -->
-  <div class="dark:text-white">
+  <div class="dark:text-white" id="main" @click="closeDropdown">
     <div class="flex h-screen overflow-y-hidden bg-white dark:bg-gray-900">
       <!-- Sidebar backdrop -->
       <div
@@ -267,7 +267,8 @@
               <!-- avatar button -->
               <div class="relative" v-if="isLoaded">
                 <button
-                  @click="isOpen = !isOpen"
+                  @click="isDropdownOpen = !isDropdownOpen"
+                  id="avatar"
                   class="p-1 bg-gray-200 rounded-full focus:outline-none focus:ring"
                 >
                   <div class="profile dark:text-black">
@@ -285,8 +286,8 @@
                 <!-- Dropdown card -->
                 <transition name="fading">
                   <div
-                    @click="isOpen = false"
-                    v-if="isOpen"
+                    v-if="isDropdownOpen"
+                    id="dropdown-content"
                     class="absolute left-9 mt-2 px-6 transform -translate-x-full bg-white dark:bg-gray-900 rounded-md shadow-lg min-w-max"
                   >
                     <div class="flex flex-col p-4 space-y-1 font-medium">
@@ -339,7 +340,7 @@ export default {
     return {
       isSidebarOpen: false,
       isSearchBoxOpen: false,
-      isOpen: false,
+      isDropdownOpen: false,
       isLoaded: false,
     };
   },
@@ -389,6 +390,28 @@ export default {
         firstLetter.push(arrayName[index][0]);
       }
       return firstLetter.join("");
+    },
+    checkParent(t, elm) {
+      while (t.parentNode) {
+        if (t == elm) {
+          return true;
+        }
+        t = t.parentNode;
+      }
+      return false;
+    },
+    closeDropdown(e) {
+      let dropdownContent = document.getElementById("dropdown-content"),
+        mainContent = document.getElementById("main"),
+        avatar = document.getElementById("avatar"),
+        target = e && e.target;
+      if (!this.checkParent(target, dropdownContent)) {
+        if (this.checkParent(target, avatar)) {
+          this.isDropdownOpen = true;
+        } else if (this.checkParent(target, mainContent)) {
+          this.isDropdownOpen = false;
+        }
+      }
     },
     logout() {},
   },
