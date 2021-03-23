@@ -92,6 +92,7 @@
           <!-- Sidebar footer -->
           <div class="flex-shrink-0 p-2 border-t max-h-14">
             <button
+              @click="logout"
               class="flex items-center justify-center w-full px-4 py-2 space-x-1 font-medium tracking-wider uppercase bg-gray-100 dark:bg-gray-900 border rounded-md focus:outline-none focus:ring"
             >
               <span>
@@ -299,15 +300,19 @@
                       <li>
                         <a
                           href="#"
-                          class="block px-2 py-1 transition rounded-md hover:bg-gray-100"
+                          class="block px-2 py-1 transition rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
                           >Pengaturan</a
                         >
                       </li>
                     </ul>
                     <div
-                      class="flex items-center justify-center p-4 text-blue-700 underline border-t"
+                      class="flex items-center justify-center p-4 text-gray-900 dark:text-white border-t cursor-pointer"
                     >
-                      <a href="#">Logout</a>
+                      <a
+                        @click="logout"
+                        class="block px-2 py-1 transition rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
+                        >Logout</a
+                      >
                     </div>
                   </div>
                 </transition>
@@ -371,6 +376,7 @@ export default {
             icon: "error",
           });
           localStorage.removeItem("siperas_key");
+          this.$store.dispatch("resetState");
           this.$router.push({ name: "landing" });
         });
     }
@@ -413,7 +419,24 @@ export default {
         }
       }
     },
-    logout() {},
+    logout() {
+      Api.deleteData("auth/logout", true)
+        .then(() => {
+          Swal.fire({
+            title: "Logout Berhasil",
+            icon: "success",
+          });
+          localStorage.removeItem("siperas_key");
+          this.$store.dispatch("resetState");
+          this.$router.push({ name: "landing" });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.message,
+            icon: "error",
+          });
+        });
+    },
   },
 };
 </script>

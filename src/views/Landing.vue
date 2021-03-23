@@ -1,5 +1,7 @@
 <template>
-  <div class="overflow-hidden max-h-full font-sans">
+  <div
+    class="overflow-hidden min-h-screen font-sans bg-white dark:bg-gray-900 text-black dark:text-white"
+  >
     <nav class="m-5 md:mx-20 md:my-10 w-full">
       <router-link
         class="text-left font-bold text-lg md:text-4xl mx-auto"
@@ -19,7 +21,7 @@
           <form
             method="POST"
             @submit.prevent="login"
-            class="shadow-lg w-full p-10 flex flex-col rounded-lg bg-white-gray"
+            class="shadow-lg w-full p-10 flex flex-col rounded-lg bg-white-gray dark:bg-gray-600"
           >
             <h5 class="font-bold text-center text-xl mt-5 mb-12">
               Selamat datang di Siperas
@@ -33,7 +35,7 @@
                   type="text"
                   placeholder="Masukan Username anda"
                   v-model="form.username"
-                  class="mb-3 p-2 focus:outline-none rounded-md focus:ring-1 ring-black shadow-sm focus:shadow-lg"
+                  class="mb-3 p-2 focus:outline-none rounded-md focus:ring-1 ring-black shadow-sm focus:shadow-lg dark:text-black"
                 />
                 <label for="password" class="text-center font-semibold my-2"
                   >Password</label
@@ -42,7 +44,7 @@
                   type="password"
                   placeholder="Masukan Password anda"
                   v-model="form.password"
-                  class="mb-1 p-2 focus:outline-none rounded-md focus:ring-1 ring-black shadow-sm focus:shadow-lg"
+                  class="mb-1 p-2 focus:outline-none rounded-md focus:ring-1 ring-black shadow-sm focus:shadow-lg dark:text-black"
                 />
               </div>
               <div v-else class="flex flex-col">
@@ -53,7 +55,7 @@
                   type="number"
                   placeholder="Masukan NISN anda"
                   v-model="form.nisn"
-                  class="mb-3 p-2 focus:outline-none rounded-md focus:ring-1 ring-black shadow-sm focus:shadow-lg"
+                  class="mb-3 p-2 focus:outline-none rounded-md focus:ring-1 ring-black shadow-sm focus:shadow-lg dark:text-black"
                 />
               </div>
             </transition>
@@ -64,7 +66,7 @@
             <hr />
             <a
               @click.prevent="changeLoginAs"
-              class="text-blue-400 text-center my-2 cursor-pointer"
+              class="text-blue-400 dark:text-indigo-100 text-center my-2 cursor-pointer"
             >
               Login sebagai {{ loginSiswa ? "petugas" : "siswa" }}
             </a>
@@ -73,13 +75,20 @@
       </div>
       <!--Right Col-->
     </div>
+    <ToggleDarkVue />
   </div>
 </template>
 
 <script>
 import Api from "@/Api";
 import Swal from "sweetalert2";
+import { mapGetters } from "vuex";
+
+import ToggleDarkVue from "../components/ToggleDark.vue";
 export default {
+  components: {
+    ToggleDarkVue,
+  },
   data() {
     return {
       loginSiswa: false,
@@ -90,6 +99,19 @@ export default {
       },
       errors: {},
     };
+  },
+  computed: {
+    ...mapGetters(["getTheme"]),
+  },
+  beforeMount() {
+    this.$store.dispatch("initTheme");
+  },
+  watch: {
+    getTheme(v) {
+      v === "light"
+        ? document.querySelector("html").classList.remove("dark")
+        : document.querySelector("html").classList.add("dark");
+    },
   },
   methods: {
     changeLoginAs() {
@@ -105,6 +127,7 @@ export default {
       }
       Api.postData(uri, this.form)
         .then((data) => {
+          Api.setHeaders(data.token);
           localStorage.setItem("siperas_key", data.token);
           Swal.fire({
             title: "Sukses Login",
