@@ -2,7 +2,6 @@ import {
     createStore
 } from "vuex";
 import themeModules from "./modules/theme"
-
 const defaultState = () => {
     return {
         user: null,

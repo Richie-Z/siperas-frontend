@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute bottom-0 right-6 mb-2 flex justify-center items-center cursor-pointer"
+    class="fixed bottom-0 right-6 mb-2 flex justify-center items-center cursor-pointer"
   >
     <span @click="toggleTheme">
       <svg
