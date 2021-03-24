@@ -21,7 +21,7 @@
         leave-to-class="-translate-x-full opacity-0 ease-in"
       >
         <aside
-          class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white dark:bg-gray-900 border-r shadow-lg lg:z-auto lg:static lg:shadow-none"
+          class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform border-r bg-white dark:bg-gray-900 shadow-lg lg:z-auto lg:static lg:shadow-none"
           :class="{
             '-translate-x-full lg:translate-x-0 lg:w-20': !isSidebarOpen,
           }"
@@ -59,9 +59,9 @@
           <!-- Sidebar links -->
           <nav class="flex-1 overflow-hidden hover:overflow-y-auto">
             <ul class="p-2 overflow-hidden">
-              <li>
-                <a
-                  href="#"
+              <li class="menu">
+                <router-link
+                  :to="{ name: 'dashboard' }"
                   class="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
                   :class="{ 'justify-center': !isSidebarOpen }"
                 >
@@ -84,7 +84,7 @@
                   <span :class="{ 'lg:hidden': !isSidebarOpen }"
                     >Dashboard</span
                   >
-                </a>
+                </router-link>
               </li>
               <!-- Sidebar Links... -->
             </ul>
@@ -323,7 +323,12 @@
         <!-- Main content -->
 
         <!-- Start Content -->
-        <router-view></router-view>
+        <div
+          class="bg-gray-200 dark:bg-gray-600 flex-1 overflow-x-hidden overflow-y-scroll"
+        >
+          <router-view></router-view>
+        </div>
+
         <ToggleDark />
       </div>
     </div>

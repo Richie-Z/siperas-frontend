@@ -17,7 +17,7 @@
       </div>
       <!--Left Col-->
       <div class="flex w-full md:w-2/5 justify-center items-end">
-        <div class="container mx-auto flex flex-col items-center mt-2 md:-mt-2">
+        <div class="container mx-auto flex flex-col items-center">
           <form
             method="POST"
             @submit.prevent="login"

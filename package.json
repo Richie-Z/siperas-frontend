@@ -11,10 +11,12 @@
     "@tailwindcss/postcss7-compat": "^2.0.3",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.6.5",
+    "echarts": "^5.0.2",
     "postcss": "^7.0.35",
     "sweetalert2": "^10.15.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "vue": "^3.0.0",
+    "vue-echarts": "^6.0.0-rc.3",
     "vue-router": "^4.0.5",
     "vuex": "^4.0.0"
   },

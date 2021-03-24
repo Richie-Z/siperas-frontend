@@ -47,3 +47,11 @@ body {
 .fading-leave-to {
   opacity: 0;
 }
+.menu .router-link-exact-active {
+  @apply bg-gray-100;
+  @apply font-bold;
+  @apply dark:bg-gray-600;
+}
+.contentBx {
+  @apply px-8 py-8 rounded-lg bg-white dark:bg-gray-200 shadow-lg text-gray-800;
+}
