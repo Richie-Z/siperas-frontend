@@ -7,7 +7,6 @@ import {
 import {
     PieChart,
     LineChart,
-    BarChart
 } from "echarts/charts";
 import {
     TitleComponent,
@@ -42,6 +41,44 @@ export default {
                 areaStyle: {},
             }, ],
         }
+        return option
+    },
+    petugasSale: () => {
+        const option = {
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                type: 'scroll',
+            },
+            series: [{
+                name: 'Pembayaran',
+                type: 'pie',
+                radius: '50%',
+                data: [{
+                        value: 1048,
+                        name: 'Immanuel Richie'
+                    },
+                    {
+                        value: 580,
+                        name: 'Gintoki'
+                    },
+                    {
+                        value: 484,
+                        name: 'Kagura'
+                    },
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
         return option
     }
 }

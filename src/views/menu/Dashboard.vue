@@ -26,13 +26,14 @@
       </div>
     </div>
   </div>
-  <div class="flex -mt-2 m-7">
-    <div class="contentBx w-2/3">
+  <div class="flex-none md:flex -mt-2 m-7">
+    <div class="contentBx w-2/3 relative">
       <h3 class="font-bold">Pembayaran minggu ini</h3>
-      <v-chart class="min-w-max" :option="option" style="height: 350px" />
+      <v-chart class="w-full mx-2" :option="week" style="height: 350px" />
     </div>
-    <div class="contentBx ml-7 w-2/5">
-      <h3 class="font-bold">Pembayaran minggu ini</h3>
+    <div class="contentBx ml-7 w-1/3 relative">
+      <h3 class="font-bold mb-4">Penjualan Petugas</h3>
+      <v-chart class="w-full -mb-2" :option="petugasSale" />
     </div>
   </div>
 </template>
@@ -59,8 +60,9 @@ export default defineComponent({
     };
   },
   setup: () => {
-    const option = ref(Echarts.week());
-    return { option };
+    const week = ref(Echarts.week());
+    const petugasSale = ref(Echarts.petugasSale());
+    return { week, petugasSale };
   },
   methods: {
     formatRupiah: (money) => {
