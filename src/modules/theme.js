@@ -24,17 +24,11 @@ const theme = {
             else
                 context.commit('setTheme', 'light')
         },
-        toggleTheme(context) {
-            context.commit('setTheme', localStorage.theme == 'light' ? 'dark' : 'light')
-            // switch (localStorage.theme) {
-            //     case 'light':
-            //         context.commit('setTheme', 'dark')
-            //         break;
-
-            //     default:
-            //         context.commit('setTheme', 'light')
-            //         break;
-            // }
+        toggleTheme(context, c) {
+            context.commit('setTheme',
+                c == 1 ? 'light' :
+                c == 2 ? 'dark' :
+                localStorage.theme == 'dark' ? 'light' : 'dark')
         }
     }
 }

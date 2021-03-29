@@ -2,7 +2,7 @@
   <div
     class="fixed bottom-0 right-6 mb-2 flex justify-center items-center cursor-pointer"
   >
-    <span @click="toggleTheme">
+    <span @click="toggleTheme(1)">
       <svg
         class="h-6 w-6 text-gray-500"
         fill="none"
@@ -31,7 +31,7 @@
         :class="{ 'translate-x-7 ': toggleActive }"
       ></div>
     </div>
-    <span @click="toggleTheme">
+    <span @click="toggleTheme(2)">
       <svg
         class="h-6 w-6 text-gray-400"
         fill="none"
@@ -60,9 +60,11 @@ export default {
     this.toggleActive = this.$store.getters.getTheme == "dark" ? true : false;
   },
   methods: {
-    toggleTheme() {
-      this.$store.dispatch("toggleTheme");
-      this.toggleActive = !this.toggleActive;
+    toggleTheme(k) {
+      this.$store.dispatch("toggleTheme", k);
+      if (k === 1) this.toggleActive = false;
+      else if (k == 2) this.toggleActive = true;
+      else this.toggleActive = !this.toggleActive;
     },
   },
 };

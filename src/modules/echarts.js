@@ -23,19 +23,51 @@ use([
     TooltipComponent,
     LegendComponent,
 ]);
+import store from "@/vuex"
+import Api from "@/Api"
+let week, petugas;
+// const dataSet = async () => {
+//         petugas = store.getters.perPetugas
+//         week = getVal(store.getters.perWeek)
 
+//     if (!store.getters.perWeek) {
+//         Api.getData("rekap/per_minggu").then((data) => {
+//             store.dispatch("perWeek", data.data);
+//             week = getVal(data.data);
+//         });
+//     } else {
+//         week = getVal(store.getters.perWeek)
+//     }
+//     if (!store.getters.perPetugas) {
+//         Api.getData("rekap/per_petugas").then((data) => {
+//             store.dispatch("perPetugas", data.data);
+//             petugas = data.data;
+//         });
+//     } else {
+//         petugas = store.getters.perPetugas
+//     }
+// }
+
+function getVal(data) {
+    let onlyVal = [];
+    for (let i in data.days) {
+        onlyVal.push(data.days[i].value);
+    }
+    return onlyVal;
+}
+// dataSet();
 export default {
-    week: () => {
+    week: (data) => {
         const option = {
             xAxis: {
                 type: "category",
-                data: ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"],
+                data: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"]
             },
             yAxis: {
                 type: "value",
             },
             series: [{
-                data: [900000, 0, 100000, 400000, 1290, 1330, 2000],
+                data: getVal(data),
                 type: "line",
                 smooth: true,
                 areaStyle: {},
@@ -43,7 +75,7 @@ export default {
         }
         return option
     },
-    petugasSale: () => {
+    petugasSale: (data) => {
         const option = {
             tooltip: {
                 trigger: 'item'
@@ -57,19 +89,7 @@ export default {
                 name: 'Pembayaran',
                 type: 'pie',
                 radius: '50%',
-                data: [{
-                        value: 1048,
-                        name: 'Immanuel Richie'
-                    },
-                    {
-                        value: 580,
-                        name: 'Gintoki'
-                    },
-                    {
-                        value: 484,
-                        name: 'Kagura'
-                    },
-                ],
+                data: data,
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,

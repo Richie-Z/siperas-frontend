@@ -12,7 +12,7 @@
     <div
       class="max-w-max px-16 mx-auto flex flex-wrap flex-col md:flex-row items-center overflow-y-hidden pb-4 mt-0 md:-mt-16"
     >
-      <div class="w-0 hidden md:flex md:w-3/5 py-6 justify-start w">
+      <div class="w-0 hidden md:flex mt-16 md:w-3/5 py-6 justify-start w">
         <img class="w-full md:w-4/5 z-1" src="../assets/images/hero.png" />
       </div>
       <!--Left Col-->

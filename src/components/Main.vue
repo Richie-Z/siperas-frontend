@@ -394,7 +394,8 @@ export default {
       let profile = this.profile.nama_petugas;
       let arrayName = profile.split(/[-:]|[ :]/g);
       if (arrayName.length == 1) {
-        return arrayName[0];
+        let split = profile.split("");
+        return split[0] + split[1];
       }
       let firstLetter = new Array();
       for (let index = 0; index < arrayName.length; index++) {
