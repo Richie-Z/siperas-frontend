@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="flex-none md:flex -mt-2 m-7">
-    <div class="contentBx w-2/3">
+    <div class="contentBx w-full md:w-2/3">
       <div class="flex justify-between">
         <h3 class="font-bold">Pembayaran minggu ini</h3>
         <button @click="refresh('week')">
@@ -55,7 +55,7 @@
         :loadingOptions="chartLoadingOptions"
       />
     </div>
-    <div class="contentBx ml-7 w-1/3">
+    <div class="contentBx w-full mt-5 h-80 md:h-auto md:mt-0 md:ml-7 md:w-1/3">
       <div class="flex justify-between">
         <h3 class="font-bold mb-4">Penjualan Petugas</h3>
         <button @click="refresh('petugas')">
@@ -142,6 +142,18 @@ export default {
     getPetugas(data) {
       return Echarts.petugasSale(data);
     },
+    getPerWeek() {
+      Api.getData("rekap/per_minggu").then((data) => {
+        this.$store.dispatch("perWeek", data.data);
+        this.week = this.getWeek(data.data);
+      });
+    },
+    getPerPetugas() {
+      Api.getData("rekap/per_petugas").then((data) => {
+        this.$store.dispatch("perPetugas", data.data);
+        this.petugasSale = this.getPetugas(data.data);
+      });
+    },
     refresh(identity) {
       this.seconds = 3;
       identity == "week"
@@ -153,24 +165,18 @@ export default {
           clearTimeout(timer);
           if (identity == "week") {
             this.weekLoading = false;
-            this.week = this.getWeek();
+            this.getPerWeek();
           } else {
             this.petugasLoading = false;
-            this.petugasSale = this.getPetugas();
+            this.getPerPetugas();
           }
         }
       }, 1000);
     },
   },
   mounted() {
-    Api.getData("rekap/per_minggu").then((data) => {
-      this.$store.dispatch("perWeek", data.data);
-      this.week = this.getWeek(data.data);
-    });
-    Api.getData("rekap/per_petugas").then((data) => {
-      this.$store.dispatch("perPetugas", data.data);
-      this.petugasSale = this.getPetugas(data.data);
-    });
+    this.getPerWeek();
+    this.getPerPetugas();
     if (!this.$store.getters.rekap) {
       Api.getData("rekap").then((data) => {
         this.rekap = data.data;

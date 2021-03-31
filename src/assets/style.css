@@ -49,7 +49,7 @@ body {
 }
 .menu .router-link-exact-active {
   @apply bg-gray-100;
-  @apply font-bold;
+  @apply font-semibold;
   @apply dark:bg-gray-600;
 }
 .contentBx {

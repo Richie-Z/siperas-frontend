@@ -17,14 +17,24 @@ const routes = [{
         path: '/menu',
         component: Main,
         children: [{
-            path: 'dashboard',
-            name: "dashboard",
-            meta: {
-                authOnly: true,
-                title: "Dashboard - Sistem Informasi Pembayaran SPP ",
+                path: 'dashboard',
+                name: "dashboard",
+                meta: {
+                    authOnly: true,
+                    title: "Dashboard - Sistem Informasi Pembayaran SPP ",
+                },
+                component: () => import('@/views/menu/Dashboard.vue'),
             },
-            component: () => import('@/views/menu/Dashboard.vue'),
-        }]
+            {
+                path: 'petugas',
+                name: 'petugas',
+                meta: {
+                    authOnly: true,
+                    title: "Data Petugas - Sistem Informasi Pembayaran SPP ",
+                },
+                component: () => import('@/views/menu/Dashboard.vue'),
+            },
+        ]
     },
 ]
 const router = createRouter({

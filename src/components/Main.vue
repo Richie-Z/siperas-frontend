@@ -32,7 +32,7 @@
             :class="{ 'lg:justify-center': !isSidebarOpen }"
           >
             <span
-              class="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap"
+              class="p-2 text-xl font-medium leading-8 tracking-wider uppercase whitespace-nowrap"
             >
               S<span :class="{ 'lg:hidden': !isSidebarOpen }">iperas</span>
             </span>
@@ -59,32 +59,29 @@
           <!-- Sidebar links -->
           <nav class="flex-1 overflow-hidden hover:overflow-y-auto">
             <ul class="p-2 overflow-hidden">
-              <li class="menu">
-                <router-link
-                  :to="{ name: 'dashboard' }"
-                  class="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
-                  :class="{ 'justify-center': !isSidebarOpen }"
-                >
-                  <span>
-                    <svg
-                      class="w-6 h-6 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      />
-                    </svg>
-                  </span>
-                  <span :class="{ 'lg:hidden': !isSidebarOpen }"
-                    >Dashboard</span
+              <li class="menu" v-for="sb in sidebars" :key="sb.id">
+                <div v-if="sb.isDivider" class="mt-4 mb-2">
+                  <hr :class="{ 'lg:hidden': isSidebarOpen }" />
+                  <span
+                    :class="{ 'lg:hidden': !isSidebarOpen }"
+                    class="p-2 uppercase font-semibold text-base"
+                    >{{ sb.name }}</span
                   >
-                </router-link>
+                </div>
+                <div v-else>
+                  <router-link
+                    :to="{ name: sb.route }"
+                    class="flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 text-sm"
+                    :class="{ 'justify-center': !isSidebarOpen }"
+                  >
+                    <span>
+                      <div v-html="sb.svg" class="h-6 w-6"></div>
+                    </span>
+                    <span :class="{ 'lg:hidden': !isSidebarOpen }">{{
+                      sb.name
+                    }}</span>
+                  </router-link>
+                </div>
               </li>
               <!-- Sidebar Links... -->
             </ul>
@@ -352,6 +349,60 @@ export default {
       isSearchBoxOpen: false,
       isDropdownOpen: false,
       isLoaded: false,
+      sidebars: [
+        {
+          name: "Dashboard",
+          route: "dashboard",
+          svg: `  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                  </svg>`,
+        },
+        {
+          name: "Menu Admin",
+          isDivider: true,
+        },
+        {
+          name: "Data Petugas",
+          route: "petugas",
+          svg: `  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>`,
+        },
+        {
+          name: "Data Kelas",
+          route: "dashboard",
+          svg: `  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>`,
+        },
+        {
+          name: "Data Siswa",
+          route: "dashboard",
+          svg: `  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                  </svg>`,
+        },
+        {
+          name: "Menu Pembayaran",
+          isDivider: true,
+        },
+        {
+          name: "Pembayaran",
+          route: "dashboard",
+          svg: `  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  </svg>`,
+        },
+        {
+          name: "Histori Pembayaran",
+          route: "dashboard",
+          svg: `  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>`,
+        },
+      ],
     };
   },
   beforeMount() {
