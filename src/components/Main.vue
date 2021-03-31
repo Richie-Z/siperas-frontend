@@ -470,7 +470,7 @@ export default {
         target = e && e.target;
       if (!this.checkParent(target, dropdownContent)) {
         if (this.checkParent(target, avatar)) {
-          this.isDropdownOpen = true;
+          this.isDropdownOpen = this.isDropdownOpen ? true : false;
         } else if (this.checkParent(target, mainContent)) {
           this.isDropdownOpen = false;
         }
