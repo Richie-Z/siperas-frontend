@@ -29,6 +29,16 @@ body {
   @apply text-lg;
   @apply w-auto;
 }
+.btn-table {
+  @apply p-1;
+  @apply mx-1;
+  @apply px-6;
+  @apply text-white;
+  @apply rounded-md;
+  @apply focus:outline-none;
+  @apply focus:ring-2;
+  @apply ring-offset-2;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

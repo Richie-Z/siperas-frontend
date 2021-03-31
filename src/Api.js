@@ -1,4 +1,9 @@
-const BASE_URL = "http://127.0.0.1:8000/api/";
+import Swal from "sweetalert2";
+import {
+    useRouter
+} from 'vue-router'
+import store from "./vuex"
+const BASE_URL = "http://127.0.0.2:8000/api/";
 let headersApi = new Headers();
 let token = localStorage.siperas_key
 if (token)
@@ -8,6 +13,19 @@ headersApi.append("charset", "utf-8");
 export default {
     setHeaders(token) {
         headersApi.append("Authorization", `Bearer ${token}`)
+    },
+    async tokenChecker() {
+        const router = useRouter();
+        let res
+        this.getData("token_checker").then(() => res = true).catch((error) => {
+            res = false
+            localStorage.removeItem("siperas_key");
+            store.dispatch("resetState");
+            router.push({
+                name: "landing"
+            });
+        })
+        return res
     },
     async postData(url = "", data = {}) {
         let response = await fetch(BASE_URL + url, {

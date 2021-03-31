@@ -32,7 +32,16 @@ const routes = [{
                     authOnly: true,
                     title: "Data Petugas - Sistem Informasi Pembayaran SPP ",
                 },
-                component: () => import('@/views/menu/Dashboard.vue'),
+                component: () => import('@/views/menu/petugas/Index.vue'),
+            },
+            {
+                path: 'petugas/tambah',
+                name: 'tambahPetugas',
+                meta: {
+                    authOnly: true,
+                    title: "Tambah Petugas - Sistem Informasi Pembayaran SPP ",
+                },
+                component: () => import('@/views/menu/petugas/Index.vue'),
             },
         ]
     },
