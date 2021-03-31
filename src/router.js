@@ -3,6 +3,8 @@ import {
     createRouter
 } from 'vue-router'
 import Landing from "@/views/Landing.vue"
+import Dashboard from "@/views/menu/Dashboard.vue"
+import Petugas from "@/views/menu/petugas/Index.vue"
 import Main from "@/components/Main.vue"
 const routes = [{
         path: "/",
@@ -23,7 +25,7 @@ const routes = [{
                     authOnly: true,
                     title: "Dashboard - Sistem Informasi Pembayaran SPP ",
                 },
-                component: () => import('@/views/menu/Dashboard.vue'),
+                component: Dashboard,
             },
             {
                 path: 'petugas',
@@ -32,7 +34,7 @@ const routes = [{
                     authOnly: true,
                     title: "Data Petugas - Sistem Informasi Pembayaran SPP ",
                 },
-                component: () => import('@/views/menu/petugas/Index.vue'),
+                component: () => Petugas,
             },
             {
                 path: 'petugas/tambah',
@@ -41,7 +43,7 @@ const routes = [{
                     authOnly: true,
                     title: "Tambah Petugas - Sistem Informasi Pembayaran SPP ",
                 },
-                component: () => import('@/views/menu/petugas/Index.vue'),
+                component: () => import('@/views/menu/petugas/Create.vue'),
             },
         ]
     },

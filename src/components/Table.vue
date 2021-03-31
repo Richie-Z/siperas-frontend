@@ -81,53 +81,55 @@
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
       <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
-          <thead>
+          <thead
+            class="bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-800"
+          >
             <tr>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider"
               >
                 #
               </th>
               <th
                 v-for="c in column"
                 :key="c"
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider"
               >
                 {{ c }}
               </th>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                class="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider"
               >
                 Opsi
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody
+            class="bg-white dark:bg-gray-300 border-b border-gray-200 dark:border-gray-800"
+          >
             <tr
               v-for="({ id, username, level, nama_petugas }, i) in row"
               :key="i"
             >
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">{{ i + 1 }}</p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ nama_petugas }}
                 </p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ username }}
                 </p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ level }}
                 </p>
               </td>
-              <td
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center"
-              >
+              <td class="px-5 py-5 text-sm text-center">
                 <button class="btn-table bg-yellow-500 ring-yellow-300">
                   Edit
                 </button>
@@ -144,6 +146,7 @@
       </div>
     </div>
     <div
+      v-if="isPaginated"
       class="px-5 py-5 bg-white flex flex-col xs:flex-row items-center xs:justify-between"
     >
       <span class="text-xs xs:text-sm text-gray-900">
@@ -197,11 +200,18 @@ export default {
       required: false,
       default: false,
     },
+    isPaginated: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
-    deleteData() {
+    deleteData(id) {
+      let name = this.row.find((r) => r.id == id);
       Swal.fire({
-        title: "Yakin,Hapus data?",
+        title: "Yakin, Hapus data?",
+        text: `Jika kamu hapus, maka semua data yang berelasi dengan nama ${this.name} '${name.nama_petugas}' akan terhapus.`,
         showCancelButton: true,
         confirmButtonText: "Hapus",
         cancelButtonText: "Ga Jadi",
