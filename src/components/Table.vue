@@ -2,7 +2,11 @@
   <div class="mx-auto">
     <div class="flex justify-between">
       <h2 class="text-2xl font-semibold leading-tight">{{ name }}</h2>
-      <router-link :to="{ name: `tambah${name}` }" class="h-6 w-6">
+      <router-link
+        v-if="isAddable"
+        :to="{ name: `tambah${name}` }"
+        class="h-6 w-6"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -80,7 +84,7 @@
     </div>
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
       <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-        <table class="min-w-full leading-normal">
+        <table class="min-w-full leading-normal" v-if="column && row">
           <thead
             class="bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-800"
           >
@@ -98,15 +102,21 @@
                 {{ c }}
               </th>
               <th
+                v-if="isEditable"
                 class="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider"
               >
                 Opsi
               </th>
             </tr>
           </thead>
-          <tbody
-            class="bg-white dark:bg-gray-300 border-b border-gray-200 dark:border-gray-800"
-          >
+          <div v-if="row.length <= 0">
+            <p
+              class="text-gray-900 whitespace-no-wrap py-5 text-sm text-center"
+            >
+              Data Kosong
+            </p>
+          </div>
+          <tbody class="tbody" v-if="model == 'petugas'">
             <tr
               v-for="({ id, username, level, nama_petugas }, i) in row"
               :key="i"
@@ -129,10 +139,59 @@
                   {{ level }}
                 </p>
               </td>
-              <td class="px-5 py-5 text-sm text-center">
-                <button class="btn-table bg-yellow-500 ring-yellow-300">
-                  Edit
+              <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
+                <router-link
+                  :to="{ name: 'detailPetugas', params: { id: id } }"
+                  class="btn-table bg-yellow-500 ring-yellow-300"
+                >
+                  Detail
+                </router-link>
+                <button
+                  class="btn-table bg-red-500 ring-red-300"
+                  @click.prevent="deleteData(id)"
+                >
+                  Hapus
                 </button>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else-if="model == 'histori_pembayaran'">
+            <tr
+              v-for="(
+                { nama_siswa, tgl_bayar, kembalian, jumlah_bayar }, i
+              ) in row"
+              :key="i"
+            >
+              <td class="px-5 py-5 text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">{{ i + 1 }}</p>
+              </td>
+              <td class="px-5 py-5 text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ nama_siswa }}
+                </p>
+              </td>
+              <td class="px-5 py-5 text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ jumlah_bayar }}
+                </p>
+              </td>
+              <td class="px-5 py-5 text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ 0 >= kembalian ? `-` : kembalian }}
+                </p>
+              </td>
+              <td class="px-5 py-5 text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ tgl_bayar }}
+                </p>
+              </td>
+              <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
+                <router-link
+                  :to="{ name: 'detailPetugas', params: { id: id } }"
+                  class="btn-table bg-yellow-500 ring-yellow-300"
+                >
+                  Detail
+                </router-link>
                 <button
                   class="btn-table bg-red-500 ring-red-300"
                   @click.prevent="deleteData(id)"
@@ -185,6 +244,7 @@ export default {
       type: Object,
       required: true,
     },
+    model: String,
     isSearchable: {
       type: Boolean,
       required: false,
@@ -201,6 +261,16 @@ export default {
       default: false,
     },
     isPaginated: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    isAddable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    isEditable: {
       type: Boolean,
       required: false,
       default: false,

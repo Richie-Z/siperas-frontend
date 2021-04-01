@@ -2,7 +2,14 @@
   <breadcrumb-vue current-page="Data Petugas"></breadcrumb-vue>
   <h1 class="m-7 font-semibold text-3xl">Data Petugas</h1>
   <div class="contentBx m-7">
-    <table-vue name="Petugas" :column="column" :row="row" />
+    <table-vue
+      name="Petugas"
+      :column="column"
+      :row="row"
+      :isAddable="true"
+      :isEditable="true"
+      model="petugas"
+    />
   </div>
 </template>
 

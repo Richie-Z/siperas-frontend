@@ -65,3 +65,6 @@ body {
 .contentBx {
   @apply px-8 py-8 rounded-lg bg-white dark:bg-gray-200 shadow-lg text-gray-800;
 }
+.tbody {
+  @apply bg-white dark:bg-gray-300 border-b border-gray-200 dark:border-gray-800;
+}

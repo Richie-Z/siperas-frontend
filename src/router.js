@@ -18,11 +18,13 @@ const routes = [{
     {
         path: '/menu',
         component: Main,
+        meta: {
+            authOnly: true,
+        },
         children: [{
                 path: 'dashboard',
                 name: "dashboard",
                 meta: {
-                    authOnly: true,
                     title: "Dashboard - Sistem Informasi Pembayaran SPP ",
                 },
                 component: Dashboard,
@@ -31,20 +33,27 @@ const routes = [{
                 path: 'petugas',
                 name: 'petugas',
                 meta: {
-                    authOnly: true,
                     title: "Data Petugas - Sistem Informasi Pembayaran SPP ",
                 },
-                component: () => Petugas,
+                component: Petugas,
             },
             {
                 path: 'petugas/tambah',
                 name: 'tambahPetugas',
                 meta: {
-                    authOnly: true,
                     title: "Tambah Petugas - Sistem Informasi Pembayaran SPP ",
                 },
                 component: () => import('@/views/menu/petugas/Create.vue'),
             },
+            {
+                path: 'petugas/:id',
+                name: 'detailPetugas',
+                meta: {
+                    title: "Detail Petugas - Sistem Informasi Pembayaran SPP ",
+                },
+                props: true,
+                component: () => import('@/views/menu/petugas/Show.vue')
+            }
         ]
     },
 ]

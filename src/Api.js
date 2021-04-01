@@ -17,6 +17,7 @@ export default {
     async tokenChecker() {
         const router = useRouter();
         this.getData("token_checker").catch((error) => {
+            headersApi.delete("Authorization");
             Swal.fire(error.message, '', 'error')
             localStorage.removeItem("siperas_key");
             store.dispatch("resetState");
@@ -70,5 +71,20 @@ export default {
             headersApi.delete("Authorization");
         }
         return response;
-    }
+    },
+    async putData(url = "", data = {}) {
+        let response = await fetch(BASE_URL + url, {
+            method: "PUT",
+            headers: headersApi,
+            body: JSON.stringify(data),
+        }).then(async (res) => {
+            let data = await res.json();
+            if (res.ok) {
+                return Promise.resolve(data);
+            } else {
+                return Promise.reject(data);
+            }
+        })
+        return response;
+    },
 }
