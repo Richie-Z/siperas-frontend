@@ -131,14 +131,14 @@
               </td>
               <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
                 <router-link
-                  :to="{ name: 'detailPetugas', params: { id: row.id } }"
+                  :to="{ name: `detail${name}`, params: { id: row.id } }"
                   class="btn-table bg-yellow-500 ring-yellow-300"
                 >
                   Detail
                 </router-link>
                 <button
                   class="btn-table bg-red-500 ring-red-300"
-                  @click.prevent="deleteData(id)"
+                  @click.prevent="deleteData(row.id)"
                 >
                   Hapus
                 </button>
@@ -173,7 +173,7 @@
 
 <script>
 import Swal from "sweetalert2";
-// import Api from "@/Api";
+import Api from "@/Api";
 export default {
   props: {
     name: {
@@ -238,7 +238,15 @@ export default {
         cancelButtonText: "Ga Jadi",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Data berhasil dihapus!", "", "success");
+          Api.deleteData(`${this.name.toLowerCase()}/${id}`)
+            .then(() => {
+              Swal.fire("Data berhasil dihapus!", "", "success");
+              this.$router.push({
+                name: this.name.toLowerCase(),
+                query: { status: "deleted" },
+              });
+            })
+            .catch((error) => Swal.fire(error.message, "", "error"));
         }
       });
     },

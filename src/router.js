@@ -36,6 +36,9 @@ const routes = [{
                     title: "Data Petugas - Sistem Informasi Pembayaran SPP ",
                 },
                 component: Petugas,
+                props: route => ({
+                    query: route.query.status
+                })
             },
             {
                 path: 'petugas/tambah',

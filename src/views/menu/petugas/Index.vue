@@ -21,6 +21,7 @@ export default {
     BreadcrumbVue,
     TableVue,
   },
+  props: ["query"],
   data() {
     return {
       column: [
@@ -34,6 +35,11 @@ export default {
   methods: {
     getPetugas() {
       Api.getData("petugas").then((data) => (this.row = data.data));
+    },
+  },
+  watch: {
+    query() {
+      this.getPetugas();
     },
   },
   mounted() {

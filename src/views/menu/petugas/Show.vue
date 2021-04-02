@@ -155,6 +155,7 @@
   </div>
   <div class="contentBx m-7">
     <table-vue
+      v-if="petugas.nama_petugas"
       :name="`Histori Penjualan ${petugas.nama_petugas}`"
       :column="column"
       :row="petugas.pembayaran"
