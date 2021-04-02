@@ -14,6 +14,9 @@ export default {
     setHeaders(token) {
         headersApi.append("Authorization", `Bearer ${token}`)
     },
+    deleteAuthorization() {
+        headersApi.delete("Authorization");
+    },
     async tokenChecker() {
         const router = useRouter();
         this.getData("token_checker").catch((error) => {

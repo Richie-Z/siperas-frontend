@@ -465,8 +465,7 @@ export default {
             title: error.message,
             icon: "error",
           });
-          let headers = new Headers();
-          headers.delete("Authorization");
+          Api.deleteAuthorization();
           localStorage.removeItem("siperas_key");
           this.$store.dispatch("resetState");
           this.$router.push({ name: "landing" });
