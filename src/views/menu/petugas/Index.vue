@@ -8,7 +8,6 @@
       :row="row"
       :isAddable="true"
       :isEditable="true"
-      model="petugas"
     />
   </div>
 </template>
@@ -24,7 +23,11 @@ export default {
   },
   data() {
     return {
-      column: ["Nama Petugas", "Username", "Level"],
+      column: [
+        { name: "Nama Petugas", rowModel: "nama_petugas" },
+        { name: "Username", rowModel: "username" },
+        { name: "Level", rowModel: "level" },
+      ],
       row: {},
     };
   },

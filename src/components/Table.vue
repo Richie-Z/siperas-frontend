@@ -95,7 +95,7 @@
                 #
               </th>
               <th
-                v-for="c in column"
+                v-for="c in columnModel"
                 :key="c"
                 class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider"
               >
@@ -109,85 +109,29 @@
               </th>
             </tr>
           </thead>
-          <div v-if="row.length <= 0">
-            <p
-              class="text-gray-900 whitespace-no-wrap py-5 text-sm text-center"
-            >
-              Data Kosong
-            </p>
-          </div>
-          <tbody class="tbody" v-if="model == 'petugas'">
-            <tr
-              v-for="({ id, username, level, nama_petugas }, i) in row"
-              :key="i"
-            >
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">{{ i + 1 }}</p>
-              </td>
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ nama_petugas }}
-                </p>
-              </td>
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ username }}
-                </p>
-              </td>
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ level }}
-                </p>
-              </td>
-              <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
-                <router-link
-                  :to="{ name: 'detailPetugas', params: { id: id } }"
-                  class="btn-table bg-yellow-500 ring-yellow-300"
-                >
-                  Detail
-                </router-link>
-                <button
-                  class="btn-table bg-red-500 ring-red-300"
-                  @click.prevent="deleteData(id)"
-                >
-                  Hapus
-                </button>
+          <tbody v-if="row.length <= 0" class="tbody">
+            <tr>
+              <td
+                :colspan="columnModel.length + 1"
+                class="px-5 py-5 text-sm text-center"
+              >
+                <p class="text-gray-900 whitespace-no-wrap">Tidak ada Data</p>
               </td>
             </tr>
           </tbody>
-          <tbody v-else-if="model == 'histori_pembayaran'">
-            <tr
-              v-for="(
-                { nama_siswa, tgl_bayar, kembalian, jumlah_bayar }, i
-              ) in row"
-              :key="i"
-            >
+          <tbody class="tbody" v-else>
+            <tr v-for="(row, i) in row" :key="i">
               <td class="px-5 py-5 text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">{{ i + 1 }}</p>
               </td>
-              <td class="px-5 py-5 text-sm">
+              <td class="px-5 py-5 text-sm" v-for="r in rowModel" :key="r">
                 <p class="text-gray-900 whitespace-no-wrap">
-                  {{ nama_siswa }}
-                </p>
-              </td>
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ jumlah_bayar }}
-                </p>
-              </td>
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ 0 >= kembalian ? `-` : kembalian }}
-                </p>
-              </td>
-              <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ tgl_bayar }}
+                  {{ 0 >= row[r] ? "-" : row[r] }}
                 </p>
               </td>
               <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
                 <router-link
-                  :to="{ name: 'detailPetugas', params: { id: id } }"
+                  :to="{ name: 'detailPetugas', params: { id: row.id } }"
                   class="btn-table bg-yellow-500 ring-yellow-300"
                 >
                   Detail
@@ -244,7 +188,6 @@ export default {
       type: Object,
       required: true,
     },
-    model: String,
     isSearchable: {
       type: Boolean,
       required: false,
@@ -274,6 +217,14 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+  },
+  computed: {
+    columnModel() {
+      return this.column.map((a) => a.name);
+    },
+    rowModel() {
+      return this.column.map((a) => a.rowModel);
     },
   },
   methods: {
