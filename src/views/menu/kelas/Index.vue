@@ -1,14 +1,14 @@
 <template>
-  <breadcrumb-vue current-page="Data Petugas" />
-  <h1 class="m-7 font-semibold text-3xl">Data Petugas</h1>
+  <breadcrumb-vue current-page="Data Kelas" />
+  <h1 class="m-7 font-semibold text-3xl">Data Kelas</h1>
   <div class="contentBx m-7">
     <table-vue
-      name="Petugas"
+      name="Kelas"
       :column="column"
       :row="row"
       :isAddable="true"
       :isEditable="true"
-      deleteMessageModel="nama_petugas"
+      deleteMessageModel="kelas"
     />
   </div>
 </template>
@@ -26,27 +26,26 @@ export default {
   data() {
     return {
       column: [
-        { name: "Nama Petugas", rowModel: "nama_petugas" },
-        { name: "Username", rowModel: "username" },
-        { name: "Level", rowModel: "level" },
+        { name: "Kelas", rowModel: "kelas" },
+        { name: "Kompetensi", rowModel: "kompetensi_keahlian" },
       ],
       row: {},
     };
   },
   methods: {
-    getPetugas() {
-      Api.getData("petugas").then((data) => (this.row = data.data));
+    getKelas() {
+      Api.getData("kelas").then((data) => (this.row = data.data));
     },
   },
   watch: {
     query() {
-      this.getPetugas();
-      this.$router.push({ name: "petugas" });
+      this.getKelas();
+      this.$router.push({ name: "kelas" });
     },
   },
   mounted() {
     Api.tokenChecker();
-    this.getPetugas();
+    this.getKelas();
   },
 };
 </script>

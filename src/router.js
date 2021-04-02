@@ -5,6 +5,7 @@ import {
 import Landing from "@/views/Landing.vue"
 import Dashboard from "@/views/menu/Dashboard.vue"
 import Petugas from "@/views/menu/petugas/Index.vue"
+import Kelas from "@/views/menu/kelas/Index.vue"
 import Main from "@/components/Main.vue"
 const routes = [{
         path: "/",
@@ -12,7 +13,7 @@ const routes = [{
         component: Landing,
         meta: {
             guestOnly: true,
-            title: "Siperas - Sistem Informasi Pembayaran SPP ",
+            title: "Siperas - Sistem Informasi Pembayaran SPP",
         }
     },
     {
@@ -56,7 +57,32 @@ const routes = [{
                 },
                 props: true,
                 component: () => import('@/views/menu/petugas/Show.vue')
-            }
+            }, {
+                path: 'kelas',
+                name: 'kelas',
+                meta: {
+                    title: "Data Kelas - Sistem Informasi Pembayaran SPP ",
+                },
+                component: Kelas,
+                props: route => ({
+                    query: route.query.status
+                })
+            }, {
+                path: 'kelas/tambah',
+                name: 'tambahKelas',
+                meta: {
+                    title: "Tambah Kelas - Sistem Informasi Pembayaran SPP ",
+                },
+                component: () => import('@/views/menu/kelas/Create.vue'),
+            }, {
+                path: 'kelas/:id',
+                name: 'detailKelas',
+                meta: {
+                    title: "Detail Kelas - Sistem Informasi Pembayaran SPP ",
+                },
+                props: true,
+                component: () => import('@/views/menu/kelas/Show.vue')
+            },
         ]
     },
 ]

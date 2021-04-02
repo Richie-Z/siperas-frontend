@@ -10,7 +10,7 @@
       <div
         class="pb-4 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
       >
-        <div class="flex flex-col justify-between md:flex-row">
+        <div class="flex flex-col md:justify-between items-center md:flex-row">
           <div class="flex flex-col w-1/2 mx-2">
             <label class="leading-loose">Nama Petugas</label>
             <div class="relative focus-within:text-gray-600 text-gray-400">
@@ -79,7 +79,7 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-col justify-between md:flex-row">
+        <div class="flex flex-col md:justify-between items-center md:flex-row">
           <div class="flex flex-col w-1/2 mx-2">
             <label class="leading-loose">Password</label>
             <div class="relative focus-within:text-gray-600 text-gray-400">

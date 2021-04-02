@@ -218,6 +218,7 @@ export default {
       required: false,
       default: false,
     },
+    deleteMessageModel: String,
   },
   computed: {
     columnModel() {
@@ -232,7 +233,9 @@ export default {
       let name = this.row.find((r) => r.id == id);
       Swal.fire({
         title: "Yakin, Hapus data?",
-        text: `Jika kamu hapus, maka semua data yang berelasi dengan nama ${this.name} '${name.nama_petugas}' akan terhapus.`,
+        text: `Jika kamu hapus, maka semua data yang berelasi dengan nama ${
+          this.name
+        } '${name[this.deleteMessageModel]}' akan terhapus.`,
         showCancelButton: true,
         confirmButtonText: "Hapus",
         cancelButtonText: "Ga Jadi",

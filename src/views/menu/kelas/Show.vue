@@ -1,14 +1,14 @@
 <template>
   <breadcrumb-vue
     :totalPage="2"
-    currentPage="Data Petugas"
-    :childrenPage="petugas.nama_petugas"
+    currentPage="Data Kelas"
+    :childrenPage="`${kelas.kelas} ${kelas.kompetensi_keahlian}`"
   />
-  <h1 class="m-7 font-semibold text-3xl">Detail Petugas</h1>
+  <h1 class="m-7 font-semibold text-3xl">Detail Kelas</h1>
   <div class="contentBx m-7">
     <div class="flex justify-between">
       <h2 class="text-2xl font-semibold leading-tight">
-        {{ petugas.nama_petugas }}
+        {{ `${kelas.kelas} ${kelas.kompetensi_keahlian}` }}
       </h2>
       <transition name="fading">
         <button
@@ -38,17 +38,19 @@
       >
         <div class="flex flex-col md:justify-between items-center md:flex-row">
           <div class="flex flex-col w-1/2 mx-2">
-            <label class="leading-loose">Nama Petugas</label>
+            <label class="leading-loose">Kompetensi Keahlian</label>
             <div class="relative focus-within:text-gray-600 text-gray-400">
               <input
                 type="text"
                 :class="
-                  error.nama_petugas ? 'border-red-600' : 'border-gray-300'
+                  error.kompetensi_keahlian
+                    ? 'border-red-600'
+                    : 'border-gray-300'
                 "
-                class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm rounded-md focus:outline-none text-gray-600 disabled:bg-gray-200 disabled:dark:bg-gray-600"
-                placeholder="Nama Petugas"
+                class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm rounded-md focus:outline-none text-gray-600 disabled:bg-gray-200"
+                placeholder="Kompetensi Keahlian"
+                v-model="form.kompetensi_keahlian"
                 :disabled="isEditable ? false : true"
-                v-model="editedPetugas.nama_petugas"
               />
               <div class="absolute left-3 top-2 h-6 w-6">
                 <svg
@@ -61,48 +63,47 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
                   />
                 </svg>
               </div>
               <p
                 class="text-red-600 text-xs font-semibold ml-2"
-                v-if="error.nama_petugas"
+                v-if="error.kompetensi_keahlian"
               >
-                {{ error.nama_petugas[0] }}
+                {{ error.kompetensi_keahlian[0] }}
               </p>
             </div>
           </div>
           <div class="flex flex-col w-1/2 mx-2">
-            <label class="leading-loose">Username</label>
+            <label class="leading-loose">Kelas</label>
             <div class="relative focus-within:text-gray-600 text-gray-400">
-              <input
-                type="text"
-                :class="error.username ? 'border-red-600' : 'border-gray-300'"
-                class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm rounded-md focus:outline-none text-gray-600 disabled:bg-gray-200"
-                placeholder="Username"
+              <select
+                :class="error.kelas ? 'border-red-600' : 'border-gray-300'"
+                class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm rounded-md focus:outline-none text-gray-600 disabled:bg-gray-200 disabled:dark:bg-gray-600"
+                v-model="form.kelas"
                 :disabled="isEditable ? false : true"
-                v-model="editedPetugas.username"
-              />
+              >
+                <option value="" selected disabled>Pilih Kelas</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
               <div class="absolute left-3 top-2 h-6 w-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
                   <path
-                    fill-rule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                    clip-rule="evenodd"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                   />
                 </svg>
               </div>
-              <p
-                class="text-red-600 text-xs font-semibold ml-2"
-                v-if="error.username"
-              >
-                {{ error.username[0] }}
-              </p>
             </div>
           </div>
         </div>
@@ -155,10 +156,10 @@
   </div>
   <div class="contentBx m-7">
     <table-vue
-      v-if="petugas.nama_petugas"
-      :name="`Histori Penjualan ${petugas.nama_petugas}`"
+      v-if="kelas.siswa"
+      :name="`Data Siswa ${kelas.kelas} ${kelas.kompetensi_keahlian}`"
       :column="column"
-      :row="petugas.pembayaran"
+      :row="kelas.siswa"
     />
   </div>
 </template>
@@ -176,27 +177,27 @@ export default {
   props: ["id"],
   data() {
     return {
-      petugas: {},
-      editedPetugas: {
-        nama_petugas: "",
-        username: "",
+      kelas: {},
+      form: {
+        kompetensi_keahlian: "",
+        kelas: "",
       },
       isEditable: false,
       error: {},
       column: [
-        { name: "Nama Siswa", rowModel: "nama_siswa" },
-        { name: "Jumlah Bayar", rowModel: "jumlah_bayar" },
-        { name: "Kembalian", rowModel: "kembalian" },
-        { name: "Tanggal Bayar", rowModel: "tgl_bayar" },
+        { name: "Nama Siswa", rowModel: "nama" },
+        { name: "NISN", rowModel: "nisn" },
+        { name: "NIS", rowModel: "nis" },
+        { name: "Alamat", rowModel: "alamat" },
       ],
     };
   },
   methods: {
     getData() {
-      Api.getData(`petugas/${this.id}`).then((data) => {
-        this.petugas = data.data;
-        this.editedPetugas.nama_petugas = data.data.nama_petugas;
-        this.editedPetugas.username = data.data.username;
+      Api.getData(`kelas/${this.id}`).then((data) => {
+        this.kelas = data.data;
+        this.form.kompetensi_keahlian = data.data.kompetensi_keahlian;
+        this.form.kelas = data.data.kelas;
       });
     },
     toggleEditable() {
@@ -209,13 +210,13 @@ export default {
           Swal.showLoading();
         },
       });
-      Api.putData(`petugas/${this.id}`, this.editedPetugas)
+      Api.putData(`kelas/${this.id}`, this.form)
         .then((data) => {
           Swal.fire({
             title: data.message,
             icon: "success",
           });
-          this.$router.push({ name: "petugas" });
+          this.$router.push({ name: "kelas" });
         })
         .catch((error) => {
           Swal.fire({
