@@ -1,9 +1,5 @@
 <template>
-  <breadcrumb-vue
-    :totalPage="2"
-    currentPage="Data Petugas"
-    :childrenPage="petugas.nama_petugas"
-  />
+  <breadcrumb-vue :page="['Data Petugas', `${petugas.nama_petugas}`]" />
   <h1 class="m-7 font-semibold text-3xl">Detail Petugas</h1>
   <div class="contentBx m-7">
     <div class="flex justify-between">

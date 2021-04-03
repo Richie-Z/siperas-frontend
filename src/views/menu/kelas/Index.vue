@@ -1,5 +1,5 @@
 <template>
-  <breadcrumb-vue current-page="Data Kelas" />
+  <breadcrumb-vue page="Data Kelas" />
   <h1 class="m-7 font-semibold text-3xl">Data Kelas</h1>
   <div class="contentBx m-7">
     <table-vue

@@ -5,7 +5,7 @@
   >
     <ol class="list-none p-0 inline-flex">
       <li class="flex items-center">
-        <router-link :to="{ name: 'dashboard' }">Home</router-link>
+        <router-link :to="{ name: 'dashboard' }"> Home </router-link>
         <svg
           class="fill-current w-3 h-3 mx-3"
           xmlns="http://www.w3.org/2000/svg"
@@ -19,16 +19,15 @@
       <li class="flex items-center" v-for="n in totalPage" :key="n">
         <router-link
           v-if="n == 1"
-          :to="{
-            name: currentPage.includes('Data')
-              ? currentPage.split('Data ')[1].toLowerCase()
-              : currentPage.toLowerCase(),
-          }"
+          :to="difineTo(n)"
           :class="{ 'text-gray-500 dark:text-gray-900': totalPage == 1 }"
-          >{{ currentPage }}</router-link
+          >{{
+            typeof page == "object" && page[0] ? page[0] : page
+          }}</router-link
         >
-        <div class="flex items-center" v-if="totalPage > 1 && n == 1">
+        <div class="flex items-center" v-if="totalPage > 1">
           <svg
+            v-if="n != totalPage"
             class="fill-current w-3 h-3 mx-3"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 320 512"
@@ -41,7 +40,7 @@
             href="#"
             class="text-gray-500 dark:text-gray-900"
             aria-current="page"
-            >{{ childrenPage }}</a
+            >{{ page[n] }}</a
           >
         </div>
       </li>
@@ -52,12 +51,30 @@
 <script>
 export default {
   props: {
-    currentPage: String,
-    totalPage: {
-      type: Number,
-      default: 1,
+    page: [String, Array],
+  },
+  computed: {
+    totalPage() {
+      if (typeof this.page === "string") return 1;
+      return this.page.length;
     },
-    childrenPage: String,
+  },
+  methods: {
+    difineTo(n) {
+      let page = this.page;
+      if (typeof page === "object" && n == 1) {
+        return {
+          name: page[0].includes("Data")
+            ? page[0].split("Data ")[1].toLowerCase()
+            : page[0].toLowerCase(),
+        };
+      }
+      return {
+        name: page.includes("Data")
+          ? page.split("Data ")[1].toLowerCase()
+          : page.toLowerCase(),
+      };
+    },
   },
 };
 </script>

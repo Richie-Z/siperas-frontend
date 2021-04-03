@@ -1,14 +1,14 @@
 <template>
-  <breadcrumb-vue page="Data Petugas" />
-  <h1 class="m-7 font-semibold text-3xl">Data Petugas</h1>
+  <breadcrumb-vue page="Data Siswa" />
+  <h1 class="m-7 font-semibold text-3xl">Data Siswa</h1>
   <div class="contentBx m-7">
     <table-vue
-      name="Petugas"
+      name="Siswa"
       :column="column"
       :row="row"
       :isAddable="true"
       :isEditable="true"
-      deleteMessageModel="nama_petugas"
+      deleteMessageModel="nama"
     />
   </div>
 </template>
@@ -26,27 +26,29 @@ export default {
   data() {
     return {
       column: [
-        { name: "Nama Petugas", rowModel: "nama_petugas" },
-        { name: "Username", rowModel: "username" },
-        { name: "Level", rowModel: "level" },
+        { name: "Nama Siswa", rowModel: "nama" },
+        { name: "NISN", rowModel: "nisn" },
+        { name: "NIS", rowModel: "nis" },
+        { name: "Alamat", rowModel: "alamat" },
+        { name: "Kelas", rowModel: "kelas_jurusan" },
       ],
       row: {},
     };
   },
   methods: {
-    getPetugas() {
-      Api.getData("petugas").then((data) => (this.row = data.data));
+    getSiswa() {
+      Api.getData("siswa").then((data) => (this.row = data.data));
     },
   },
   watch: {
     query() {
-      this.getPetugas();
-      this.$router.push({ name: "petugas" });
+      this.getSiswa();
+      this.$router.push({ name: "siswa" });
     },
   },
   mounted() {
     Api.tokenChecker();
-    this.getPetugas();
+    this.getSiswa();
   },
 };
 </script>

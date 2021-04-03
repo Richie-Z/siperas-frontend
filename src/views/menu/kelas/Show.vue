@@ -1,8 +1,6 @@
 <template>
   <breadcrumb-vue
-    :totalPage="2"
-    currentPage="Data Kelas"
-    :childrenPage="`${kelas.kelas} ${kelas.kompetensi_keahlian}`"
+    :page="['Data Kelas', `${kelas.kelas} ${kelas.kompetensi_keahlian}`]"
   />
   <h1 class="m-7 font-semibold text-3xl">Detail Kelas</h1>
   <div class="contentBx m-7">

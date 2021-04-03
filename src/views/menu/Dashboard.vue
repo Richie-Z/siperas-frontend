@@ -1,5 +1,5 @@
 <template>
-  <breadcrumb-vue current-page="Dashboard" />
+  <breadcrumb-vue page="Dashboard" />
   <h1 class="m-7 font-semibold text-3xl">Dashboard</h1>
   <div class="flex-none md:flex justify-between m-7">
     <div

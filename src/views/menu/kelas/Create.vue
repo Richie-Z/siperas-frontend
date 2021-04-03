@@ -1,9 +1,5 @@
 <template>
-  <breadcrumb-vue
-    :totalPage="2"
-    currentPage="Data Kelas"
-    childrenPage="Tambah Kelas"
-  />
+  <breadcrumb-vue :page="['Data Kelas', 'Tambah Kelas']" />
   <h1 class="m-7 font-semibold text-3xl">Tambah Kelas</h1>
   <div class="contentBx m-7">
     <div class="flex justify-between">

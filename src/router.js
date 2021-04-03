@@ -6,6 +6,7 @@ import Landing from "@/views/Landing.vue"
 import Dashboard from "@/views/menu/Dashboard.vue"
 import Petugas from "@/views/menu/petugas/Index.vue"
 import Kelas from "@/views/menu/kelas/Index.vue"
+import Siswa from "@/views/menu/siswa/Index.vue"
 import Main from "@/components/Main.vue"
 const routes = [{
         path: "/",
@@ -57,7 +58,8 @@ const routes = [{
                 },
                 props: true,
                 component: () => import('@/views/menu/petugas/Show.vue')
-            }, {
+            },
+            {
                 path: 'kelas',
                 name: 'kelas',
                 meta: {
@@ -67,14 +69,16 @@ const routes = [{
                 props: route => ({
                     query: route.query.status
                 })
-            }, {
+            },
+            {
                 path: 'kelas/tambah',
                 name: 'tambahKelas',
                 meta: {
                     title: "Tambah Kelas - Sistem Informasi Pembayaran SPP ",
                 },
                 component: () => import('@/views/menu/kelas/Create.vue'),
-            }, {
+            },
+            {
                 path: 'kelas/:id',
                 name: 'detailKelas',
                 meta: {
@@ -82,6 +86,34 @@ const routes = [{
                 },
                 props: true,
                 component: () => import('@/views/menu/kelas/Show.vue')
+            },
+            {
+                path: 'siswa',
+                name: 'siswa',
+                meta: {
+                    title: "Data Siswa - Sistem Informasi Pembayaran SPP ",
+                },
+                component: Siswa,
+                props: route => ({
+                    query: route.query.status
+                })
+            },
+            {
+                path: 'siswa/tambah',
+                name: 'tambahSiswa',
+                meta: {
+                    title: "Tambah Siswa - Sistem Informasi Pembayaran SPP ",
+                },
+                component: () => import('@/views/menu/siswa/Create.vue'),
+            },
+            {
+                path: 'siswa/:id',
+                name: 'detailSiswa',
+                meta: {
+                    title: "Detail Siswa - Sistem Informasi Pembayaran SPP ",
+                },
+                props: true,
+                component: () => import('@/views/menu/siswa/Show.vue')
             },
         ]
     },
