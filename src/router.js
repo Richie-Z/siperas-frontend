@@ -115,6 +115,22 @@ const routes = [{
                 props: true,
                 component: () => import('@/views/menu/siswa/Show.vue')
             },
+            {
+                path: 'siswa/spp',
+                name: 'detailSpp',
+                meta: {
+                    title: "Detail Spp - Sistem Informasi Pembayaran SPP ",
+                },
+                component: () => import('@/views/menu/siswa/spp/Show.vue'),
+            }, {
+                path: 'siswa/spp',
+                name: 'tambahSpp',
+                meta: {
+                    title: "Tambah Spp- Sistem Informasi Pembayaran SPP ",
+                },
+                props: true,
+                component: () => import('@/views/menu/siswa/spp/Create.vue')
+            },
         ]
     },
 ]

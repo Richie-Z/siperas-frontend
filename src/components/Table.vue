@@ -3,8 +3,8 @@
     <div class="flex justify-between">
       <h2 class="text-2xl font-semibold leading-tight">{{ name }}</h2>
       <router-link
-        v-if="isAddable"
-        :to="{ name: `tambah${name}` }"
+        v-if="nestedRouter && row.length == 3 ? false : isAddable"
+        :to="{ name: `tambah${nestedRouter ?? name}`, query: defineQuery }"
         class="h-6 w-6"
       >
         <svg
@@ -126,17 +126,24 @@
               </td>
               <td class="px-5 py-5 text-sm" v-for="r in rowModel" :key="r">
                 <p class="text-gray-900 whitespace-no-wrap">
-                  {{ 0 >= row[r] ? "-" : row[r] }}
+                  {{
+                    typeof row[r] == "boolean"
+                      ? checkIfLunas(row[r])
+                      : 0 >= row[r]
+                      ? "-"
+                      : row[r]
+                  }}
                 </p>
               </td>
               <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
                 <router-link
-                  :to="{ name: `detail${name}`, params: { id: row.id } }"
+                  :to="detailLink(row.id)"
                   class="btn-table bg-yellow-500 ring-yellow-300"
                 >
                   Detail
                 </router-link>
                 <button
+                  v-if="checkIfEditable(row?.editable)"
                   class="btn-table bg-red-500 ring-red-300"
                   @click.prevent="deleteData(row.id)"
                 >
@@ -219,6 +226,7 @@ export default {
       default: false,
     },
     deleteMessageModel: String,
+    nestedRouter: String,
   },
   computed: {
     columnModel() {
@@ -227,8 +235,43 @@ export default {
     rowModel() {
       return this.column.map((a) => a.rowModel);
     },
+    defineQuery() {
+      if (this.nestedRouter) {
+        const query = {
+          siswa_id: this.$route.params.id,
+        };
+        return query;
+      }
+      return "";
+    },
   },
   methods: {
+    detailLink(id) {
+      const name = `detail${this.nestedRouter ?? this.name}`;
+      if (this.nestedRouter) {
+        const query = {
+          name,
+          query: {
+            siswa_id: this.$route.params.id,
+            spp_id: id,
+          },
+        };
+        console.log(query);
+        return query;
+      }
+      const params = {
+        name,
+        params: { id: id },
+      };
+      console.log(params);
+      return params;
+    },
+    checkIfLunas(n) {
+      return n ? "Lunas" : "Belum Lunas";
+    },
+    checkIfEditable(editable) {
+      return editable ?? true;
+    },
     deleteData(id) {
       let name = this.row.find((r) => r.id == id);
       Swal.fire({

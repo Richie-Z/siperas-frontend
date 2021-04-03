@@ -21,9 +21,7 @@
           v-if="n == 1"
           :to="difineTo(n)"
           :class="{ 'text-gray-500 dark:text-gray-900': totalPage == 1 }"
-          >{{
-            typeof page == "object" && page[0] ? page[0] : page
-          }}</router-link
+          >{{ typeof page == "object" ? page[0] : page }}</router-link
         >
         <div class="flex items-center" v-if="totalPage > 1">
           <svg
