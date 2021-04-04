@@ -256,14 +256,12 @@ export default {
             spp_id: id,
           },
         };
-        console.log(query);
         return query;
       }
       const params = {
         name,
         params: { id: id },
       };
-      console.log(params);
       return params;
     },
     checkIfLunas(n) {
@@ -274,6 +272,21 @@ export default {
     },
     deleteData(id) {
       let name = this.row.find((r) => r.id == id);
+      const uri = this.nestedRouter
+        ? `siswa/${this.$route.params.id}/spp/${id}`
+        : `${this.name.toLowerCase()}/${id}`;
+      const routerTo = () => {
+        let router = { query: { status: "deleted" } };
+        if (!this.nestedRouter) {
+          return Object.assign(router, {
+            name: this.name.toLowerCase(),
+          });
+        }
+        return Object.assign(router, {
+          name: "detailSiswa",
+          params: { id: this.$route.params.id },
+        });
+      };
       Swal.fire({
         title: "Yakin, Hapus data?",
         text: `Jika kamu hapus, maka semua data yang berelasi dengan nama ${
@@ -284,13 +297,10 @@ export default {
         cancelButtonText: "Ga Jadi",
       }).then((result) => {
         if (result.isConfirmed) {
-          Api.deleteData(`${this.name.toLowerCase()}/${id}`)
+          Api.deleteData(uri)
             .then(() => {
               Swal.fire("Data berhasil dihapus!", "", "success");
-              this.$router.push({
-                name: this.name.toLowerCase(),
-                query: { status: "deleted" },
-              });
+              this.$router.push(routerTo());
             })
             .catch((error) => Swal.fire(error.message, "", "error"));
         }

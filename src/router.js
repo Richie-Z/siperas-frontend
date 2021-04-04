@@ -112,7 +112,11 @@ const routes = [{
                 meta: {
                     title: "Detail Siswa - Sistem Informasi Pembayaran SPP ",
                 },
-                props: true,
+                props: route => ({
+                    id: route.params.id,
+                    status: route.query.status
+                }),
+
                 component: () => import('@/views/menu/siswa/Show.vue')
             },
             {
@@ -121,14 +125,20 @@ const routes = [{
                 meta: {
                     title: "Detail Spp - Sistem Informasi Pembayaran SPP ",
                 },
+                props: route => ({
+                    siswa_id: route.query.siswa_id,
+                    spp_id: route.query.spp_id,
+                }),
                 component: () => import('@/views/menu/siswa/spp/Show.vue'),
             }, {
-                path: 'siswa/spp',
+                path: 'siswa/spp/tambah',
                 name: 'tambahSpp',
                 meta: {
                     title: "Tambah Spp- Sistem Informasi Pembayaran SPP ",
                 },
-                props: true,
+                props: route => ({
+                    siswa_id: route.query.siswa_id,
+                }),
                 component: () => import('@/views/menu/siswa/spp/Create.vue')
             },
         ]
