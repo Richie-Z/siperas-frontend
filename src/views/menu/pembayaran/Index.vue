@@ -8,13 +8,14 @@
       name="Pembayaran"
       :isPaginated="true"
       :paginationInfo="paginationInfo"
+      :isAddable="true"
     >
       <button
         v-for="({ active, label, url }, i) in paginationInfo.links"
         :key="i"
-        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
-        :disabled="active"
-        @click="goTo(url, active)"
+        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l disabled:bg-gray-400"
+        :disabled="active || url == null"
+        @click="goTo(url)"
       >
         {{ typeof label == "string" ? label.split(".")[1] : label }}
       </button>
@@ -50,8 +51,7 @@ export default {
         this.paginationInfo = data.data;
       });
     },
-    goTo(url, active) {
-      if (active == null) return "";
+    goTo(url) {
       Api.getData(url, true).then((data) => {
         this.row = data.data.data;
         this.paginationInfo = data.data;
@@ -60,6 +60,8 @@ export default {
     },
   },
   beforeMount() {
+    Api.tokenChecker();
+
     this.getData();
   },
 };
