@@ -143,14 +143,14 @@ const routes = [{
                 component: () => import('@/views/menu/siswa/spp/Create.vue')
             },
             {
-                path: 'pembayaran/baru',
-                name: 'tambahPembayaran',
-                component: () => import('@/views/menu/pembayaran/Create.vue'),
-            },
-            {
                 path: 'pembayaran',
                 name: 'pembayaran',
                 component: () => import('@/views/menu/pembayaran/Index.vue'),
+            },
+            {
+                path: 'pembayaran/baru',
+                name: 'tambahPembayaran',
+                component: () => import('@/views/menu/pembayaran/Create.vue'),
             },
         ]
     },
