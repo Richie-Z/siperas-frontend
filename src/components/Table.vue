@@ -102,7 +102,7 @@
                 {{ c }}
               </th>
               <th
-                v-if="isEditable"
+                v-if="isEditable || isCetak"
                 class="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider"
               >
                 Opsi
@@ -136,6 +136,13 @@
                       : row[r]
                   }}
                 </p>
+              </td>
+              <td class="px-5 py-5 text-sm text-center" v-if="isCetak">
+                <router-link
+                  :to="{ name: 'detailPembayaran', params: { id: row.id } }"
+                  target="_blank"
+                  >Cetak</router-link
+                >
               </td>
               <td class="px-5 py-5 text-sm text-center" v-if="isEditable">
                 <router-link
@@ -227,6 +234,7 @@ export default {
     deleteMessageModel: String,
     nestedRouter: String,
     paginationInfo: Object,
+    isCetak: Boolean,
   },
   computed: {
     columnModel() {

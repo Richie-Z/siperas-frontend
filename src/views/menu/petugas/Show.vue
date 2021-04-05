@@ -155,6 +155,7 @@
       :name="`Histori Penjualan ${petugas.nama_petugas}`"
       :column="column"
       :row="petugas.pembayaran"
+      :isCetak="true"
     />
   </div>
 </template>

@@ -154,6 +154,12 @@ const routes = [{
             },
         ]
     },
+    {
+        path: '/menu/pembayaran/:id/cetak',
+        name: 'detailPembayaran',
+        component: () => import('@/views/menu/pembayaran/Show.vue'),
+        props: true
+    }
 ]
 const router = createRouter({
     history: createWebHistory(),
