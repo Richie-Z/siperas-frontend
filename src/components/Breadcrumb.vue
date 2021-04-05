@@ -78,18 +78,22 @@ export default {
   methods: {
     difineTo(n) {
       let page = this.page;
+      let to = {};
       if (typeof page === "object" && n == 1) {
-        return {
-          name: page[0].includes("Data")
-            ? page[0].split("Data ")[1].toLowerCase()
-            : page[0].toLowerCase(),
+        let split = page[0].split(" ");
+        to = {
+          name:
+            split.length > 1 ? split[1].toLowerCase() : split[0].toLowerCase(),
+        };
+      } else {
+        let split = page.split(" ");
+        to = {
+          name:
+            split.length > 1 ? split[1].toLowerCase() : split[0].toLowerCase(),
         };
       }
-      return {
-        name: page.includes("Data")
-          ? page.split("Data ")[1].toLowerCase()
-          : page.toLowerCase(),
-      };
+
+      return to;
     },
   },
 };
