@@ -130,7 +130,8 @@ const routes = [{
                     spp_id: route.query.spp_id,
                 }),
                 component: () => import('@/views/menu/siswa/spp/Show.vue'),
-            }, {
+            },
+            {
                 path: 'siswa/spp/tambah',
                 name: 'tambahSpp',
                 meta: {
@@ -140,6 +141,16 @@ const routes = [{
                     siswa_id: route.query.siswa_id,
                 }),
                 component: () => import('@/views/menu/siswa/spp/Create.vue')
+            },
+            {
+                path: 'pembayaran/baru',
+                name: 'tambahPembayaran',
+                component: () => import('@/views/menu/pembayaran/Create.vue'),
+            },
+            {
+                path: 'pembayaran',
+                name: 'pembayaran',
+                component: () => import('@/views/menu/pembayaran/Index.vue'),
             },
         ]
     },

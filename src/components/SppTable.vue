@@ -33,12 +33,20 @@
             </td>
             <td class="px-5 py-5 text-sm">
               <p class="text-gray-900 whitespace-no-wrap">
-                {{ typeof jumlah == "string" ? "-" : jumlah }}
+                {{
+                  typeof jumlah == "string" ? "-" : `Rp.${formatRupiah(jumlah)}`
+                }}
               </p>
             </td>
             <td class="px-5 py-5 text-sm">
               <p class="text-gray-900 whitespace-no-wrap">
-                {{ jumlah != nominal ? "Belum Lunas" : "Lunas" }}
+                {{
+                  typeof jumlah == "string"
+                    ? "Belum Lunas"
+                    : jumlah != nominal
+                    ? `Kurang Rp. ${formatRupiah(nominal - jumlah)}`
+                    : "Lunas"
+                }}
               </p>
             </td>
           </tr>
@@ -54,6 +62,16 @@ export default {
     name: String,
     row: [Array, Object],
     nominal: Number,
+  },
+  methods: {
+    formatRupiah: (money) => {
+      const moneyIdr = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+      }).format(money);
+      return moneyIdr.split("Rp")[1];
+    },
   },
 };
 </script>
