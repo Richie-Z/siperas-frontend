@@ -122,7 +122,9 @@
           <tbody class="tbody" v-else>
             <tr v-for="(row, i) in row" :key="i">
               <td class="px-5 py-5 text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">{{ i + 1 }}</p>
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ isPaginated ? paginationInfo.from + i : i + 1 }}
+                </p>
               </td>
               <td class="px-5 py-5 text-sm" v-for="r in rowModel" :key="r">
                 <p class="text-gray-900 whitespace-no-wrap">
@@ -160,19 +162,16 @@
       class="px-5 py-5 bg-white flex flex-col xs:flex-row items-center xs:justify-between"
     >
       <span class="text-xs xs:text-sm text-gray-900">
-        Showing 1 to 4 of 50 Entries
+        Menunjukan {{ paginationInfo.from }} sampai
+        {{
+          paginationInfo.current_page == paginationInfo.last_page
+            ? paginationInfo.to
+            : paginationInfo.from - 1 + paginationInfo.per_page
+        }}
+        dari {{ paginationInfo.total }} Data
       </span>
       <div class="inline-flex mt-2 xs:mt-0">
-        <button
-          class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
-        >
-          Prev
-        </button>
-        <button
-          class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"
-        >
-          Next
-        </button>
+        <slot></slot>
       </div>
     </div>
   </div>
@@ -227,6 +226,7 @@ export default {
     },
     deleteMessageModel: String,
     nestedRouter: String,
+    paginationInfo: Object,
   },
   computed: {
     columnModel() {
@@ -270,6 +270,7 @@ export default {
     checkIfEditable(editable) {
       return editable ?? true;
     },
+
     deleteData(id) {
       let name = this.row.find((r) => r.id == id);
       const uri = this.nestedRouter

@@ -44,8 +44,9 @@ export default {
         })
         return response;
     },
-    async getData(url = "") {
-        let response = await fetch(BASE_URL + url, {
+    async getData(url = "", raw) {
+        const uri = raw ? url : BASE_URL + url;
+        let response = await fetch(uri, {
             method: "GET",
             headers: headersApi
         }).then(async res => {
