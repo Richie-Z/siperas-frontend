@@ -90,7 +90,9 @@
                 <div
                   class="mt-4 mb-2"
                   v-if="
-                    typeof sb.forRole == 'string'
+                    typeof profile?.level == 'undefined'
+                      ? sb.forRole == 'siswa'
+                      : typeof sb.forRole == 'string'
                       ? profile.level == sb.forRole
                       : profile.level == sb.forRole[0] || sb.forRole[1]
                   "
@@ -324,7 +326,7 @@
                   >
                     <div class="flex flex-col p-4 space-y-1 font-medium">
                       <span class="text-gray-800 dark:text-white">{{
-                        profile.nama_petugas
+                        profile.nama_petugas ?? profile.nama
                       }}</span>
                     </div>
                     <ul class="flex flex-col p-2 space-y-1 eas">
@@ -428,7 +430,7 @@ export default {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
     nicknameMaker() {
-      let profile = this.profile.nama_petugas;
+      let profile = this.profile.nama_petugas ?? this.profile.nama;
       let arrayName = profile.split(/[-:]|[ :]/g);
       if (arrayName.length == 1) {
         let split = profile.split("");

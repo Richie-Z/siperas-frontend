@@ -1,87 +1,96 @@
 <template>
   <breadcrumb-vue page="Dashboard" />
   <h1 class="m-7 font-semibold text-3xl">Dashboard</h1>
-  <div class="flex-none md:flex justify-between m-7">
-    <div
-      class="pl-4 pr-20 w-full pt-3 pb-10 text-left m-2 bg-white dark:bg-gray-200 rounded-md shadow-lg text-black"
-      v-for="(n, i) in rekap"
-      :key="i"
-    >
-      <h5 class="leading-tight tracking-tight font-semibold">
-        {{
-          i === "today"
-            ? "Pembayaran hari ini"
-            : i === "week"
-            ? "Pembayaran minggu ini"
-            : i === "month"
-            ? "Pembayaran bulan ini"
-            : "Jumlah Petugas"
-        }}
-      </h5>
-      <div class="mt-4 pl-2 font-bold" v-if="i === 'petugas'">
-        {{ n }} Petugas
+  <div v-if="this.$store.getters.user?.level">
+    <div class="flex-none md:flex justify-between m-7">
+      <div
+        class="pl-4 pr-20 w-full pt-3 pb-10 text-left m-2 bg-white dark:bg-gray-200 rounded-md shadow-lg text-black"
+        v-for="(n, i) in rekap"
+        :key="i"
+      >
+        <h5 class="leading-tight tracking-tight font-semibold">
+          {{
+            i === "today"
+              ? "Pembayaran hari ini"
+              : i === "week"
+              ? "Pembayaran minggu ini"
+              : i === "month"
+              ? "Pembayaran bulan ini"
+              : "Jumlah Petugas"
+          }}
+        </h5>
+        <div class="mt-4 pl-2 font-bold" v-if="i === 'petugas'">
+          {{ n }} Petugas
+        </div>
+        <div class="mt-4 pl-2 font-bold" v-else>
+          <span class="text-xl">Rp.</span> {{ formatRupiah(n) }}
+        </div>
       </div>
-      <div class="mt-4 pl-2 font-bold" v-else>
-        <span class="text-xl">Rp.</span> {{ formatRupiah(n) }}
+    </div>
+    <div class="flex-none md:flex -mt-2 m-7">
+      <div class="contentBx w-full md:w-2/3">
+        <div class="flex justify-between">
+          <h3 class="font-bold">Pembayaran minggu ini</h3>
+          <button @click="refresh('week')">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="h-5 w-5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          </button>
+        </div>
+        <v-chart
+          class="w-auto h-80"
+          :option="week"
+          autoresize
+          :loading="weekLoading"
+          :loadingOptions="chartLoadingOptions"
+        />
+      </div>
+      <div
+        class="contentBx w-full mt-5 h-80 md:h-auto md:mt-0 md:ml-7 md:w-1/3"
+      >
+        <div class="flex justify-between">
+          <h3 class="font-bold mb-4">Penjualan Petugas</h3>
+          <button @click="refresh('petugas')">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="h-5 w-5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          </button>
+        </div>
+        <v-chart
+          class="w-auto -mb-2"
+          :option="petugasSale"
+          autoresize
+          :loading="petugasLoading"
+          :loadingOptions="chartLoadingOptions"
+        />
       </div>
     </div>
   </div>
-  <div class="flex-none md:flex -mt-2 m-7">
-    <div class="contentBx w-full md:w-2/3">
-      <div class="flex justify-between">
-        <h3 class="font-bold">Pembayaran minggu ini</h3>
-        <button @click="refresh('week')">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="h-5 w-5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-            />
-          </svg>
-        </button>
-      </div>
-      <v-chart
-        class="w-auto h-80"
-        :option="week"
-        autoresize
-        :loading="weekLoading"
-        :loadingOptions="chartLoadingOptions"
-      />
-    </div>
-    <div class="contentBx w-full mt-5 h-80 md:h-auto md:mt-0 md:ml-7 md:w-1/3">
-      <div class="flex justify-between">
-        <h3 class="font-bold mb-4">Penjualan Petugas</h3>
-        <button @click="refresh('petugas')">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="h-5 w-5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-            />
-          </svg>
-        </button>
-      </div>
-      <v-chart
-        class="w-auto -mb-2"
-        :option="petugasSale"
-        autoresize
-        :loading="petugasLoading"
-        :loadingOptions="chartLoadingOptions"
-      />
+  <div v-else>
+    <div class="contentBx m-7">
+      <h1 class="m-7 font-semibold text-3xl">Selamat datang di Siperas</h1>
     </div>
   </div>
 </template>

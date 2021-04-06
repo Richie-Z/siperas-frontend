@@ -1,10 +1,10 @@
 <template>
-  <div class="container overflow-hidden -ml-2">
-    <h1 class="mx-20 my-10 text-4xl font-bold">
+  <div class="overflow-hidden w-auto lg:container">
+    <h1 class="mx-15 lg:mx-20 my-5 text-4xl font-bold">
       SIPERAS
       <p class="text-lg font-normal">{{ row.tgl_bayar }}</p>
     </h1>
-    <table class="m-20 w-full p-4 text-lg">
+    <table class="mx-15 lg:mx-20 my-5 w-full p-4 text-lg">
       <tbody>
         <tr class="m-10">
           <td>Nama Siswa</td>
@@ -15,7 +15,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="m-16 w-full">
+    <div class="mx-15 lg:mx-20 my-5 w-full">
       <table class="border-collapse w-full">
         <thead>
           <tr class="text-left">
@@ -42,17 +42,17 @@
           >
             <td class="w-auto p-3 text-gray-800">Pembayaran SPP</td>
             <td class="w-auto p-3 text-gray-800">
-              {{ row.jumlah_bayar }}
+              {{ formatRupiah(row.jumlah_bayar) }}
             </td>
             <td class="w-auto p-3 text-gray-800">
-              {{ 0 >= row.kembalian ? "-" : row.kembalian }}
+              {{ 0 >= row.kembalian ? "-" : formatRupiah(row.kembalian) }}
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="flex justify-between">
+    <div class="flex justify-between mt-5">
       <h1></h1>
       <div>{{ row.nama_petugas }}</div>
     </div>
@@ -80,6 +80,15 @@ export default {
         })
         .then(() => window.print());
     },
+    formatRupiah: (money) => {
+      const moneyIdr = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+      }).format(money);
+      return moneyIdr;
+    },
+
     print() {
       window.print();
     },

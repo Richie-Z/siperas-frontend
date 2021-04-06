@@ -140,6 +140,7 @@
               <td class="px-5 py-5 text-sm text-center" v-if="isCetak">
                 <router-link
                   :to="{ name: 'detailPembayaran', params: { id: row.id } }"
+                  class="btn-table bg-blue-500 ring-blue-300"
                   target="_blank"
                   >Cetak</router-link
                 >
@@ -152,7 +153,7 @@
                   Detail
                 </router-link>
                 <button
-                  v-if="checkIfEditable(row?.editable)"
+                  v-if="checkIfEditable(row?.editable) && isDeleteable"
                   class="btn-table bg-red-500 ring-red-300"
                   @click.prevent="deleteData(row.id)"
                 >
@@ -230,6 +231,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    isDeleteable: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     deleteMessageModel: String,
     nestedRouter: String,

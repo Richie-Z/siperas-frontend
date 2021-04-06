@@ -152,6 +152,11 @@ const routes = [{
                 name: 'tambahPembayaran',
                 component: () => import('@/views/menu/pembayaran/Create.vue'),
             },
+            {
+                path: 'buku_spp',
+                name: 'spp',
+                component: () => import('@/views/menu/siswa/BukuSpp.vue'),
+            },
         ]
     },
     {

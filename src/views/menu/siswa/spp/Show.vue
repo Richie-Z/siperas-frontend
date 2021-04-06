@@ -1,12 +1,5 @@
 <template>
-  <breadcrumb-vue
-    :page="[
-      'Data Siswa',
-      `${spp.nama_siswa}`,
-      `Buku Spp Tahun Ajaran ${spp.tahun_ajaran}`,
-    ]"
-    nested-router-link="detailSiswa"
-  />
+  <breadcrumb-vue :page="breadcrumb" nested-router-link="detailSiswa" />
   <h1 class="m-7 font-semibold text-3xl">Detail Spp</h1>
   <div class="contentBx m-7">
     <div class="flex justify-between">
@@ -190,6 +183,8 @@ export default {
       isEditable: false,
       error: {},
       row: {},
+      isSiswa: false,
+      breadcrumb: [],
     };
   },
   watch: {
@@ -202,7 +197,18 @@ export default {
   },
   methods: {
     getData() {
-      Api.getData(`siswa/${this.siswa_id}/spp/${this.spp_id}`).then((data) => {
+      Api.getData(
+        `siswa/${this.siswa_id || this.$store.getters.user?.id}/spp/${
+          this.spp_id
+        }`
+      ).then((data) => {
+        this.breadcrumb = !this.$store.getters.user?.level
+          ? ["Buku Spp", `Buku Spp Tahun Ajaran ${data.data.tahun_ajaran}`]
+          : [
+              "Data Siswa",
+              `${data.data.nama_siswa}`,
+              `Buku Spp Tahun Ajaran ${data.data.tahun_ajaran}`,
+            ];
         this.spp = data.data;
         this.form.tahun_ajaran = data.data.tahun_ajaran;
         this.form.nominal = data.data.nominal;
@@ -263,6 +269,7 @@ export default {
     },
   },
   beforeMount() {
+    if (!this.$store.getters.user) this.$router.push({ name: "dashboard" });
     this.getData();
   },
 };
