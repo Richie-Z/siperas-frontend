@@ -1,6 +1,20 @@
 <template>
   <!-- component -->
   <div class="dark:text-white" id="main" @click="closeDropdown">
+    <PengaturanVue :isOpen="showPengaturan" :profileInfo="profile">
+      <template v-slot:drop-bg>
+        <div
+          v-if="showPengaturan"
+          @click="showPengaturan = false"
+          class="w-full h-full bg-gray-800 dark:bg-gray-600 opacity-60 flex items-center justify-center fixed left-0 bottom-0 z-20"
+        ></div>
+      </template>
+      <template v-slot:nickname>
+        <span class="text-center text-5xl font-bold">
+          {{ nicknameMaker() }}
+        </span>
+      </template>
+    </PengaturanVue>
     <div class="flex h-screen overflow-y-hidden bg-white dark:bg-gray-900">
       <!-- Sidebar backdrop -->
       <div
@@ -325,17 +339,18 @@
                     class="absolute left-9 mt-2 px-6 transform -translate-x-full bg-white dark:bg-gray-900 rounded-md shadow-lg min-w-max"
                   >
                     <div class="flex flex-col p-4 space-y-1 font-medium">
-                      <span class="text-gray-800 dark:text-white">{{
+                      <span class="text-gray-800 dark:text-white text-center">{{
                         profile.nama_petugas ?? profile.nama
                       }}</span>
                     </div>
-                    <ul class="flex flex-col p-2 space-y-1 eas">
+                    <ul class="flex flex-col p-2 space-y-1 ease">
                       <li>
-                        <a
-                          href="#"
+                        <button
+                          @click="openPengaturan"
                           class="block px-2 py-1 transition rounded-md hover:bg-gray-100 dark:hover:bg-gray-600"
-                          >Pengaturan</a
                         >
+                          Pengaturan
+                        </button>
                       </li>
                     </ul>
                     <div
@@ -373,9 +388,11 @@ import Api from "@/Api";
 import Swal from "sweetalert2";
 import ToggleDark from "../components/ToggleDark.vue";
 import SidebarMenu from "@/modules/SidebarMenu";
+import PengaturanVue from "./Pengaturan.vue";
 export default {
   components: {
     ToggleDark,
+    PengaturanVue,
   },
   computed: {
     ...mapGetters(["user", "getTheme"]),
@@ -390,6 +407,7 @@ export default {
       profile: {
         level: null,
       },
+      showPengaturan: false,
     };
   },
   beforeMount() {
@@ -426,6 +444,10 @@ export default {
     }
   },
   methods: {
+    openPengaturan() {
+      this.showPengaturan = true;
+      this.isDropdownOpen = false;
+    },
     toggleSidebarMenu() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
